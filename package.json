@@ -1,0 +1,33 @@
+{
+    "name": "vite-plugin-parallel",
+    "version": "0.0.1",
+    "author": "aolyang <aolyang@foxmail.com>",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js"
+        },
+        "./*": "./*"
+    },
+    "scripts": {
+        "dev": "vite build --watch",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "@types/node": "^20.2.0",
+        "typescript": "^5.0.4",
+        "vite": "^4.3.7",
+        "vite-plugin-dts": "^2.3.0"
+    },
+    "files": [
+        "dist"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/aolyang/vite-plugin-parallel.git"
+    },
+    "license": "MIT"
+}
