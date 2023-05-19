@@ -1,18 +1,81 @@
-import { PluginOption } from "vite";
+import type { ConfigEnv, InlineConfig, Logger, LogLevel, PluginOption, UserConfig } from "vite"
+import { build, createLogger, createServer, resolveConfig } from "vite"
+
+import path from "node:path"
+
+import { concatConfigFile, lastDirectories } from "./utils";
 
 type RunViteOptions = {
-
+    configFile: string
+    logLevel?: LogLevel
 }
-function runVite(dir: string): PluginOption
-function runVite(options: RunViteOptions): PluginOption
-function runVite(options: any): PluginOption {
+let logger: Logger
 
-    return {
-        name: "run-vite"
+export default function runVite(project: string): PluginOption[]
+export default function runVite(options: RunViteOptions): PluginOption[]
+export default function runVite(options: string | RunViteOptions): PluginOption [] {
+    const runOptions = typeof options === "string" ? { configFile: options } : options
+
+    if (!runOptions.configFile) throw Error("[vite-plugin-parallel]: ConfigFile should be specified, but found nothing!")
+
+    const { isFile, dir } = concatConfigFile(runOptions.configFile)
+    runOptions.configFile = dir
+
+    const pluginRoot = lastDirectories(runOptions.configFile)
+
+    const createCustomLogger = (config: UserConfig) => {
+        config.customLogger = createLogger(config.logLevel, {
+            prefix: `[root ${lastDirectories(__dirname, 1)}]`,
+            customLogger: logger || config.customLogger,
+            allowClearScreen: false
+        })
+        logger = config.customLogger
     }
+    const resolveInlineConfig = (config: UserConfig, env: ConfigEnv): InlineConfig => {
+        return {
+            configFile: isFile ? runOptions.configFile : false,
+            root: path.dirname(runOptions.configFile),
+            mode: env.mode,
+            logLevel: runOptions.logLevel,
+            customLogger: createLogger(runOptions.logLevel, {
+                prefix: `[parallel ${pluginRoot}]`,
+                allowClearScreen: false,
+                customLogger: config.customLogger
+            })
+        }
+    }
+    return [
+        {
+            name: "vite-plugin-parallel",
+            apply: "serve",
+            config: async (config, env) => {
+                createCustomLogger(config)
+
+                const inlineConfig = resolveInlineConfig(config, env)
+                const resolved = await resolveConfig(inlineConfig, env.command)
+
+                if (resolved.build.lib) {
+                    inlineConfig.build = { watch: {} }
+                    await build(inlineConfig)
+                } else {
+                    const server = await createServer(inlineConfig)
+                    await server.listen()
+                    server.printUrls()
+                }
+            },
+        },
+        {
+            name: "vite-plugin-parallel",
+            apply: "build",
+            config: async (config, env) => {
+                createCustomLogger(config)
+                await build(resolveInlineConfig(config, env))
+            },
+
+        }
+    ]
 }
 
-export default runVite
 export {
     runVite
 }
