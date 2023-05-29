@@ -1,6 +1,9 @@
 # vite-plugin-parallel
 
-simply run vite parallelly
+simply run vite parallel
+just one command `pnpm dev` to run your component, micro app, libs and more.
+
+:attention: this repo is far not ready, please consider `nx run-many` first.
 
 ```js
 import { defineConfig } from 'vite'

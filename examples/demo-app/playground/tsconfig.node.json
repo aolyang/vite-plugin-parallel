@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "composite": true,
+        "allowSyntheticDefaultImports": true,
+        "types": [
+            "vite/client"
+        ]
+    },
+    "include": [
+        "vite.config.ts"
+    ]
+}

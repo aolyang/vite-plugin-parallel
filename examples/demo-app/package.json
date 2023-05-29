@@ -1,0 +1,22 @@
+{
+    "name": "demo-app",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "dev": "vite ."
+    },
+    "dependencies": {
+        "@packages/lib-plus-1": "*",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@types/node": "^20.2.5",
+        "@types/react": "^18.2.7",
+        "@types/react-dom": "^18.2.4",
+        "@vitejs/plugin-react": "^4.0.0",
+        "vite": "^4.3.9",
+        "vite-plugin-dts": "^2.3.0"
+    }
+}

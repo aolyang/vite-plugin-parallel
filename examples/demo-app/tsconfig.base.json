@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "ESNext",
+        "useDefineForClassFields": true,
+        "module": "ESNext",
+        "lib": [
+            "ESNext"
+        ],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "moduleResolution": "Node",
+        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "noEmit": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "skipLibCheck": true,
+        "paths": {
+            "@packages/lib-plus-2": ["packages/lib-plus-2/src"],
+            "@packages/rc-components": ["packages/rc-components"]
+        }
+    }
+}
