@@ -10,7 +10,7 @@ export default defineConfig({
     root: __dirname,
     resolve: {
         alias: {
-            "@packages/lib-plus-1": join("packages/lib-plus-1/lib"),
+            // "@packages/lib-plus-1": join("packages/lib-plus-1/lib"),
             "@packages/lib-plus-2": join("packages/lib-plus-2/src"),
             "@packages/rc-components": join("packages/rc-components/index")
         }
@@ -19,5 +19,6 @@ export default defineConfig({
         reactRefresh(),
         runVite("playground"),
         runVite("micros/micro-app"),
+        runVite("packages/lib-plus-1") // if you want build lib while every change
     ]
 })
