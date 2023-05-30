@@ -24,14 +24,17 @@ export default function runVite(options: string | RunViteOptions): PluginOption 
     const pluginRoot = lastDirectories(runOptions.configFile)
 
     const createCustomLogger = (config: UserConfig) => {
+        console.log("create logger", `[root ${lastDirectories(__dirname, 1)}]`)
         config.customLogger = createLogger(config.logLevel, {
             prefix: `[root ${lastDirectories(__dirname, 1)}]`,
-            customLogger: logger || config.customLogger,
-            allowClearScreen: false
+            // customLogger: logger || config.customLogger,
+            // allowClearScreen: false
         })
-        logger = config.customLogger
+        // logger = config.customLogger
     }
     const resolveInlineConfig = (config: UserConfig, env: ConfigEnv): InlineConfig => {
+
+        console.log("create logger", `[parallel ${lastDirectories(pluginRoot)}]`)
         return {
             configFile: isFile ? runOptions.configFile : false,
             root: path.dirname(runOptions.configFile),
@@ -39,8 +42,8 @@ export default function runVite(options: string | RunViteOptions): PluginOption 
             logLevel: runOptions.logLevel,
             customLogger: createLogger(runOptions.logLevel, {
                 prefix: `[parallel ${pluginRoot}]`,
-                allowClearScreen: false,
-                customLogger: config.customLogger
+                // allowClearScreen: false,
+                // customLogger: config.customLogger
             })
         }
     }

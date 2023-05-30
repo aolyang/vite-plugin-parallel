@@ -9,10 +9,10 @@ const join = (dir: string) => path.join(__dirname, dir)
 export default defineConfig({
     root: __dirname,
     plugins: [
-        runVite("packages/lib-plus-1"),
-        runVite("packages/lib-plus-2"),
-        runVite("packages/rc-components"),
-        runVite("."),
-        runVite("micros/micro-app")
+       runVite("packages/lib-plus-1"),
+       runVite("packages/lib-plus-2"),
+       runVite("packages/rc-components"),
+       runVite("."),
+       runVite("micros/micro-app")
     ]
 })

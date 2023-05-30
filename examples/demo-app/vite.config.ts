@@ -10,9 +10,9 @@ export default defineConfig({
     root: __dirname,
     resolve: {
         alias: {
-            "@packages/lib-plus-1": join("packages/lib-plus-1"),
+            "@packages/lib-plus-1": join("packages/lib-plus-1/lib"),
             "@packages/lib-plus-2": join("packages/lib-plus-2/src"),
-            "@packages": join("packages")
+            "@packages/rc-components": join("packages/rc-components/index")
         }
     },
     plugins: [
